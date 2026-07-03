@@ -76,8 +76,8 @@ function divide(num1, num2) {
 
 
 // Vars
-let num1Input = 0;
-let num2Input = 0;
+let num1Input = null;
+let num2Input = null;
 let operatorInput = "";
 
 
