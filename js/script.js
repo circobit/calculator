@@ -50,3 +50,46 @@ equalButton.addEventListener('mouseover', function() {
 equalButton.addEventListener('mouseout', function() {
 	equalButton.style.backgroundColor = "rgb(89, 154, 239)";
 });
+
+
+// Calculator logic
+
+// Add
+function add(num1, num2) {
+	return num1 + num2;
+};
+
+// Subtract
+function subtract(num1, num2) {
+	return num1 - num2;
+};
+
+// Multiply
+function multiply(num1, num2) {
+	return num1 * num2;
+};
+
+// Divide
+function divide(num1, num2) {
+	return num1 / num2;
+};
+
+
+// Vars
+let num1Input = 0;
+let num2Input = 0;
+let operatorInput = "";
+
+
+// Operate function
+function operate(operator, num1, num2) {
+	if (operator == "add") {
+		return add(num1, num2);
+	} else if (operator == "subtract") {
+		return subtract(num1, num2);
+	} else if (operator == "multiply") {
+		return multiply(num1, num2);
+	} else if (operator == "divide") {
+		return divide(num1, num2);
+	};
+};
