@@ -139,3 +139,13 @@ equalButton.addEventListener('click', function() {
 	waitingForSecondNumber = false;
 	displayElement.textContent = result;
 });
+
+
+// Add eventListener to allClear button to clean all numbers
+allClearButton.addEventListener('click', function() {
+	let num1Input = null;
+	let num2Input = null;
+	let operatorInput = "";
+	let waitingForSecondNumber = false;
+	displayElement.textContent = 0;
+});
