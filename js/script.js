@@ -130,3 +130,12 @@ operatorButtons.forEach((element) => element.addEventListener('click', function(
 	waitingForSecondNumber = true;
 	operatorInput = element.textContent;
 }));
+
+
+// Add eventListener to equal button to perform operation and show result
+equalButton.addEventListener('click', function() {
+	num2Input = displayElement.textContent;
+	let result = operate(operatorInput, +num1Input, +num2Input);
+	waitingForSecondNumber = false;
+	displayElement.textContent = result;
+});
