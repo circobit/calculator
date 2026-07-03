@@ -110,3 +110,9 @@ numberButtons.forEach((element) => element.addEventListener('click', function() 
 }));
 
 
+// Add eventListeners to operator buttons to store values in vars
+operatorButtons.forEach((element) => element.addEventListener('click', function() {
+	num1Input = displayElement.textContent;
+	operatorInput = element.textContent;
+	waitingForSecondNumber = true;
+}));
