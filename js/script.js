@@ -83,13 +83,13 @@ let operatorInput = "";
 
 // Operate function
 function operate(operator, num1, num2) {
-	if (operator == "add") {
+	if (operator == "+") {
 		return add(num1, num2);
-	} else if (operator == "subtract") {
+	} else if (operator == "-") {
 		return subtract(num1, num2);
-	} else if (operator == "multiply") {
+	} else if (operator == "x") {
 		return multiply(num1, num2);
-	} else if (operator == "divide") {
+	} else if (operator == "÷") {
 		return divide(num1, num2);
 	};
 };
