@@ -50,6 +50,7 @@ button {
 	border: 0;
 	border-radius: 20px;
 	font-size: 3rem;
+	cursor: pointer;
 }
 
 .operator {
@@ -85,4 +86,9 @@ button {
 
 .column4b {
 	height: 100%;
+}
+
+#clear {
+	background-color: rgb(172, 4, 4);
+	color: white;
 }
