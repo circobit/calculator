@@ -79,6 +79,7 @@ function divide(num1, num2) {
 let num1Input = null;
 let num2Input = null;
 let operatorInput = "";
+let waitingForSecondNumber = false;
 
 
 // Operate function
@@ -100,7 +101,8 @@ function operate(operator, num1, num2) {
 const displayElement = document.getElementById("display");
 // Add eventListener to number buttons
 numberButtons.forEach((element) => element.addEventListener('click', function() {
-	if (displayElement.textContent == "0") {
+	if (displayElement.textContent == "0" || waitingForSecondNumber == true) {
+		waitingForSecondNumber = false;
 		displayElement.textContent = element.textContent;
 	} else {
 		displayElement.textContent = displayElement.textContent + element.textContent;
