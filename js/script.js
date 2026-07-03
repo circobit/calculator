@@ -92,6 +92,7 @@ let num1Input = null;
 let num2Input = null;
 let operatorInput = "";
 let waitingForSecondNumber = false;
+let writingSecondNumer = false;
 
 
 // Operate function
@@ -115,6 +116,7 @@ const displayElement = document.getElementById("display");
 numberButtons.forEach((element) => element.addEventListener('click', function() {
 	if (displayElement.textContent == "0" || waitingForSecondNumber == true) {
 		waitingForSecondNumber = false;
+		writingSecondNumer = true;
 		displayElement.textContent = element.textContent;
 	} else {
 		displayElement.textContent = displayElement.textContent + element.textContent;
@@ -148,4 +150,15 @@ allClearButton.addEventListener('click', function() {
 	let operatorInput = "";
 	let waitingForSecondNumber = false;
 	displayElement.textContent = 0;
+});
+
+
+// Add eventListener for clear button to remove the last digit
+clearButton.addEventListener('click', function() {
+	if (displayElement.textContent != 0 && displayElement.textContent.length > 1) {
+		console.log("Condition taken");
+		displayElement.textContent = displayElement.textContent.slice(0, -1);
+	} else {
+		displayElement.textContent = 0;
+	}
 });
