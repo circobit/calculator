@@ -28,6 +28,18 @@ numberButtons.forEach((element) => element.addEventListener('mouseout', function
 }));
 
 
+// 'All Clear' button
+const allClearButton = document.getElementById("allClear");
+// Mouseover
+allClearButton.addEventListener('mouseover', function() {
+	allClearButton.style.backgroundColor = "rgb(182, 85, 85)";
+});
+// Mouseout
+allClearButton.addEventListener('mouseout', function() {
+	allClearButton.style.backgroundColor = "rgb(172, 4, 4)";
+});
+
+
 // Clear button
 const clearButton = document.getElementById("clear");
 // Mouseover
