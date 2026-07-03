@@ -119,7 +119,10 @@ numberButtons.forEach((element) => element.addEventListener('click', function() 
 		writingSecondNumer = true;
 		displayElement.textContent = element.textContent;
 	} else {
-		displayElement.textContent = displayElement.textContent + element.textContent;
+		// Set limits to don't allow user to exceed the amount of characters in the display
+		if (displayElement.textContent.length < 8) {
+			displayElement.textContent = displayElement.textContent + element.textContent;
+		};
 	};
 }));
 
