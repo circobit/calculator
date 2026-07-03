@@ -52,7 +52,7 @@ equalButton.addEventListener('mouseout', function() {
 });
 
 
-// Calculator logic
+//==== Calculator logic ====//
 
 // Add
 function add(num1, num2) {
@@ -93,3 +93,16 @@ function operate(operator, num1, num2) {
 		return divide(num1, num2);
 	};
 };
+
+
+// Event listeners to write numbers in display
+// Get display element
+const displayElement = document.getElementById("display");
+// Add eventListener to number buttons
+numberButtons.forEach((element) => element.addEventListener('click', function() {
+	if (displayElement.textContent == 0) {
+		displayElement.textContent = element.textContent;
+	} else {
+		displayElement.textContent = displayElement.textContent + element.textContent;
+	};
+}));
