@@ -87,12 +87,13 @@ function divide(num1, num2) {
 };
 
 
-// Vars
+// State variables
 let num1Input = null;
 let num2Input = null;
 let operatorInput = "";
 let waitingForSecondNumber = false;
 let writingSecondNumer = false;
+let isDotInserted = false;
 
 
 // Operate function
@@ -121,7 +122,15 @@ numberButtons.forEach((element) => element.addEventListener('click', function() 
 	} else {
 		// Set limits to don't allow user to exceed the amount of characters in the display
 		if (displayElement.textContent.length < 8) {
-			displayElement.textContent = displayElement.textContent + element.textContent;
+			// Check if the button pressed is Dot (.)
+			// If it is Dot, check wether there's already a dot inserted
+			// and block the possibility to add more than one dot
+			if (element.textContent == "." && isDotInserted == false && element.textContent != "C") {
+				displayElement.textContent = displayElement.textContent + element.textContent;
+				isDotInserted = true;
+			} else if (element.textContent != "." && element.textContent != "C") {
+				displayElement.textContent = displayElement.textContent + element.textContent;
+			};
 		};
 	};
 }));
@@ -134,6 +143,7 @@ operatorButtons.forEach((element) => element.addEventListener('click', function(
 	}
 	waitingForSecondNumber = true;
 	operatorInput = element.textContent;
+	isDotInserted = false;
 }));
 
 
@@ -152,17 +162,18 @@ equalButton.addEventListener('click', function() {
 	} else {
 		displayElement.textContent = resultString;
 	}
-
 	waitingForSecondNumber = false;
+	isDotInserted = false;
 });
 
 
 // Add eventListener to allClear button to clean all numbers
 allClearButton.addEventListener('click', function() {
-	let num1Input = null;
-	let num2Input = null;
-	let operatorInput = "";
-	let waitingForSecondNumber = false;
+	num1Input = null;
+	num2Input = null;
+	peratorInput = "";
+	waitingForSecondNumber = false;
+	isDotInserted = false;
 	displayElement.textContent = 0;
 });
 
@@ -170,7 +181,10 @@ allClearButton.addEventListener('click', function() {
 // Add eventListener for clear button to remove the last digit
 clearButton.addEventListener('click', function() {
 	if (displayElement.textContent != 0 && displayElement.textContent.length > 1) {
-		console.log("Condition taken");
+		// If the last value to remove is a dot, set isDotInserted to false
+		if (displayElement.textContent.slice(-1) == ".") {
+			isDotInserted = false;
+		};
 		displayElement.textContent = displayElement.textContent.slice(0, -1);
 	} else {
 		displayElement.textContent = 0;
