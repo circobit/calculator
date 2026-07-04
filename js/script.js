@@ -151,17 +151,9 @@ operatorButtons.forEach((element) => element.addEventListener('click', function(
 equalButton.addEventListener('click', function() {
 	num2Input = displayElement.textContent;
 	let result = operate(operatorInput, +num1Input, +num2Input);
-
-	// Convert result to string to check length and cap the output 
-	// to the max allowed by the display
-	resultString = result.toString()
-	resultStringCut = "";
-	if (resultString.length > 8) {
-		resultStringCut = resultString.slice(0, 8);
-		displayElement.textContent = resultStringCut;
-	} else {
-		displayElement.textContent = resultString;
-	}
+	// Use .toPrecision() to make the result not overflow the display
+	preciseResult = result.toPrecision(5);
+	displayElement.textContent = preciseResult;
 	waitingForSecondNumber = false;
 	isDotInserted = false;
 });
