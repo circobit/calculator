@@ -91,9 +91,11 @@ function divide(num1, num2) {
 let num1Input = null;
 let num2Input = null;
 let operatorInput = "";
+let latestResult = null;
 let waitingForSecondNumber = false;
 let writingSecondNumer = false;
 let isDotInserted = false;
+let isInErrorState = false;
 
 
 // Operate function
@@ -110,12 +112,21 @@ function operate(operator, num1, num2) {
 };
 
 
+// Span to show scientific notation to don't overflow the display
+const inlineDisplaySpan = document.getElementById("inlineDisplay");
+
+
 // Event listeners to write numbers in display
 // Get display element
 const displayElement = document.getElementById("display");
 // Add eventListener to number buttons
 numberButtons.forEach((element) => element.addEventListener('click', function() {
-	if (displayElement.textContent == "0" || waitingForSecondNumber == true) {
+	if (isInErrorState == true) {
+		return;
+	} else if (inlineDisplaySpan.textContent != "") {
+		displayElement.textContent = "ERROR";
+		isInErrorState = true;
+	} else if (displayElement.textContent == "0" || waitingForSecondNumber == true) {
 		waitingForSecondNumber = false;
 		writingSecondNumer = true;
 		displayElement.textContent = element.textContent;
@@ -133,44 +144,67 @@ numberButtons.forEach((element) => element.addEventListener('click', function() 
 			};
 		};
 	};
+	inlineDisplaySpan.textContent = "";
 }));
 
 
 // Add eventListeners to operator buttons to store values in vars
 operatorButtons.forEach((element) => element.addEventListener('click', function() {
-	if (waitingForSecondNumber == false) {
-		num1Input = displayElement.textContent;
-	}
-	waitingForSecondNumber = true;
+	// Check if num1Input is inserted. If not, populate num1Input with first number
+	// and set latestResult to that number to reflect the latest result;
+	if (isInErrorState == true) {
+		return;
+	} else if (num1Input == null && latestResult == null) {
+		num1Input = +displayElement.textContent;
+		// latestResults can be what it's shown in display because the first number
+		// will never be in scientific notation and, hence, won't be split in both
+		// display spans.
+		latestResult = +displayElement.textContent;
+		// Since the first number is inserted, we indicate that we are waiting for
+		// the second number
+		waitingForSecondNumber = true;
+	// If the latestResult is stored and also num1Input and num2Input are null,
+	// it means we are operating over a result. Store latestResult as num1Input
+	} else if (num1Input == null && num2Input == null && latestResult != null) {
+		num1Input = latestResult;
+		waitingForSecondNumber = true;
+	};
 	operatorInput = element.textContent;
 	isDotInserted = false;
 }));
 
 
 // Add eventListener to equal button to perform operation and show result
-const inlineDisplaySpan = document.getElementById("inlineDisplay");
-
 equalButton.addEventListener('click', function() {
+	if (isInErrorState == true) {
+		return;
+	}
 	num2Input = displayElement.textContent;
 	let result = operate(operatorInput, +num1Input, +num2Input);
-	// Use .toPrecision() to make the result not overflow the display
-	preciseResult = result.toPrecision(6);
-	// Check if preciseResult includes "e+" to put it in the span 
+	// Use .toPrecision() to make the result not overflow the display if
+	// it's longer than 7 digits
+	resultString = result.toString();
+	resultStringLength = resultString.length;
+	if (resultString.length > 8) {
+		resultString = result.toPrecision(6);
+	};
+	// Check if resultString includes "e+" to put it in the span 
 	// of id #inlineDisplay to assign it a lower size to the tree 
 	// characters "e+X". The objetive is to fit more numbers in the display
-	if (preciseResult.includes("e+")) {
-		lastThreeDigits = preciseResult.slice(-3);
-		console.log(`lastThreeDigits: ${lastThreeDigits}`);
-		console.log(`preciseResultBefore: ${preciseResult}`);
-		preciseResult = preciseResult.slice(0, -3);
-		displayElement.textContent = preciseResult;
-		inlineDisplaySpan.textContent = lastThreeDigits;
-		console.log(`preciseResultAfter: ${preciseResult}`);
+	if (resultString.includes("e+")) {
+		indexOfE = resultString.indexOf("e");
+		digitsAfterE = resultString.slice(indexOfE);
+		resultString = resultString.slice(0, indexOfE);
+		displayElement.textContent = resultString;
+		inlineDisplaySpan.textContent = digitsAfterE;
 	} else {
-		displayElement.textContent = preciseResult;
+		displayElement.textContent = resultString;
 	};
+	latestResult = result;
 	waitingForSecondNumber = false;
 	isDotInserted = false;
+	num1Input = null;
+	num2Input = null;
 });
 
 
@@ -178,9 +212,11 @@ equalButton.addEventListener('click', function() {
 allClearButton.addEventListener('click', function() {
 	num1Input = null;
 	num2Input = null;
-	peratorInput = "";
+	operatorInput = "";
+	latestResult = null;
 	waitingForSecondNumber = false;
 	isDotInserted = false;
+	isInErrorState = false;
 	displayElement.textContent = 0;
 	inlineDisplaySpan.textContent = "";
 });
@@ -188,7 +224,9 @@ allClearButton.addEventListener('click', function() {
 
 // Add eventListener for clear button to remove the last digit
 clearButton.addEventListener('click', function() {
-	if (displayElement.textContent != 0 && displayElement.textContent.length > 1) {
+	if (isInErrorState == true) {
+		return;
+	} else if (displayElement.textContent != 0 && displayElement.textContent.length > 1) {
 		// If the last value to remove is a dot, set isDotInserted to false
 		if (displayElement.textContent.slice(-1) == ".") {
 			isDotInserted = false;
