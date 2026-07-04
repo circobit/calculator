@@ -148,12 +148,27 @@ operatorButtons.forEach((element) => element.addEventListener('click', function(
 
 
 // Add eventListener to equal button to perform operation and show result
+const inlineDisplaySpan = document.getElementById("inlineDisplay");
+
 equalButton.addEventListener('click', function() {
 	num2Input = displayElement.textContent;
 	let result = operate(operatorInput, +num1Input, +num2Input);
 	// Use .toPrecision() to make the result not overflow the display
-	preciseResult = result.toPrecision(5);
-	displayElement.textContent = preciseResult;
+	preciseResult = result.toPrecision(6);
+	// Check if preciseResult includes "e+" to put it in the span 
+	// of id #inlineDisplay to assign it a lower size to the tree 
+	// characters "e+X". The objetive is to fit more numbers in the display
+	if (preciseResult.includes("e+")) {
+		lastThreeDigits = preciseResult.slice(-3);
+		console.log(`lastThreeDigits: ${lastThreeDigits}`);
+		console.log(`preciseResultBefore: ${preciseResult}`);
+		preciseResult = preciseResult.slice(0, -3);
+		displayElement.textContent = preciseResult;
+		inlineDisplaySpan.textContent = lastThreeDigits;
+		console.log(`preciseResultAfter: ${preciseResult}`);
+	} else {
+		displayElement.textContent = preciseResult;
+	};
 	waitingForSecondNumber = false;
 	isDotInserted = false;
 });
@@ -167,6 +182,7 @@ allClearButton.addEventListener('click', function() {
 	waitingForSecondNumber = false;
 	isDotInserted = false;
 	displayElement.textContent = 0;
+	inlineDisplaySpan.textContent = "";
 });
 
 
@@ -181,4 +197,5 @@ clearButton.addEventListener('click', function() {
 	} else {
 		displayElement.textContent = 0;
 	}
+	inlineDisplaySpan.textContent = "";
 });
