@@ -222,6 +222,7 @@ operatorButtons.forEach((element) => element.addEventListener('click', function(
 
 // Add eventListener to equal button to perform operation and show result
 equalButton.addEventListener('click', function() {
+	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
 	}
@@ -234,8 +235,8 @@ equalButton.addEventListener('click', function() {
 	if (resultString.length > 8) {
 		resultString = result.toPrecision(6);
 	};
-	// Check if resultString includes "e+" to put it in the span 
-	// of id #inlineDisplay to assign it a lower size to the tree 
+	// Check if resultString includes "e+" to put it in the span
+	// of id #inlineDisplay to assign it a lower size to the tree
 	// characters "e+X". The objetive is to fit more numbers in the display
 	if (resultString.includes("e+")) {
 		indexOfE = resultString.indexOf("e");
@@ -270,6 +271,7 @@ allClearButton.addEventListener('click', function() {
 
 // Add eventListener for clear button to remove the last digit
 clearButton.addEventListener('click', function() {
+	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
 	} else if (displayElement.textContent != 0 && displayElement.textContent.length > 1) {
