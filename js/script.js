@@ -1,4 +1,4 @@
-// Event listeners to highlight buttons
+//==== Event listeners to highlight buttons on mouseover ====//
 
 // Operator buttons
 const operatorButtons = document.querySelectorAll(".operator");
@@ -128,7 +128,7 @@ function performOperation() {
 	};
 	// Check if resultString includes "e+" to put it in the span 
 	// of id #inlineDisplay to assign it a lower size to the tree 
-	// characters "e+X". The objetive is to fit more numbers in the display
+	// characters "e+X". The objetive is to avoid overflow in the display.
 	if (resultString.includes("e+")) {
 		indexOfE = resultString.indexOf("e");
 		digitsAfterE = resultString.slice(indexOfE);
