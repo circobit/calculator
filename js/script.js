@@ -124,7 +124,6 @@ function performOperation() {
 	if (isInErrorState == true) {
 		return;
 	}
-	num2Input = displayElement.textContent;
 	let result = operate(operatorInput, +num1Input, +num2Input);
 	// Use .toPrecision() to make the result not overflow the display if
 	// it's longer than 7 digits
