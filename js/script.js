@@ -96,6 +96,13 @@ let waitingForSecondNumber = false;
 let writingSecondNumer = false;
 let isDotInserted = false;
 let isInErrorState = false;
+let equalExecuted = false;
+
+
+// Get display element
+const displayElement = document.getElementById("display");
+// Span to show scientific notation to don't overflow the display
+const inlineDisplaySpan = document.getElementById("inlineDisplay");
 
 
 // Operate function
