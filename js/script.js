@@ -221,38 +221,7 @@ operatorButtons.forEach((element) => element.addEventListener('click', function(
 
 
 // Add eventListener to equal button to perform operation and show result
-equalButton.addEventListener('click', function() {
-	// Do nothing if it's in errorState (Just AC can work in that scenario)
-	if (isInErrorState == true) {
-		return;
-	}
-	num2Input = displayElement.textContent;
-	let result = operate(operatorInput, +num1Input, +num2Input);
-	// Use .toPrecision() to make the result not overflow the display if
-	// it's longer than 7 digits
-	resultString = result.toString();
-	resultStringLength = resultString.length;
-	if (resultString.length > 8) {
-		resultString = result.toPrecision(6);
-	};
-	// Check if resultString includes "e+" to put it in the span
-	// of id #inlineDisplay to assign it a lower size to the tree
-	// characters "e+X". The objetive is to fit more numbers in the display
-	if (resultString.includes("e+")) {
-		indexOfE = resultString.indexOf("e");
-		digitsAfterE = resultString.slice(indexOfE);
-		resultString = resultString.slice(0, indexOfE);
-		displayElement.textContent = resultString;
-		inlineDisplaySpan.textContent = digitsAfterE;
-	} else {
-		displayElement.textContent = resultString;
-	};
-	latestResult = result;
-	waitingForSecondNumber = false;
-	isDotInserted = false;
-	num1Input = null;
-	num2Input = null;
-});
+equalButton.addEventListener('click', () => performOperation());
 
 
 // Add eventListener to allClear button to clean all numbers
