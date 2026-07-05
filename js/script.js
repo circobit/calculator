@@ -156,11 +156,9 @@ const inlineDisplaySpan = document.getElementById("inlineDisplay");
 const displayElement = document.getElementById("display");
 // Add eventListener to number buttons
 numberButtons.forEach((element) => element.addEventListener('click', function() {
+	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
-	} else if (inlineDisplaySpan.textContent != "") {
-		displayElement.textContent = "ERROR";
-		isInErrorState = true;
 	} else if (displayElement.textContent == "0" || waitingForSecondNumber == true) {
 		waitingForSecondNumber = false;
 		writingSecondNumer = true;
@@ -175,7 +173,13 @@ numberButtons.forEach((element) => element.addEventListener('click', function() 
 				displayElement.textContent = displayElement.textContent + element.textContent;
 				isDotInserted = true;
 			} else if (element.textContent != "." && element.textContent != "C") {
-				displayElement.textContent = displayElement.textContent + element.textContent;
+				if (inlineDisplaySpan.textContent != "") {
+					// Raise error state if the user tries to insert a number over a scientific notation number
+					displayElement.textContent = "ERROR!";
+					isInErrorState = true;
+				} else {
+					displayElement.textContent = displayElement.textContent + element.textContent;
+				};
 			};
 		};
 	};
