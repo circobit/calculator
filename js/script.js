@@ -239,6 +239,7 @@ allClearButton.addEventListener('click', function() {
 	waitingForSecondNumber = false;
 	isDotInserted = false;
 	isInErrorState = false;
+	equalExecuted = false;
 	displayElement.textContent = 0;
 	inlineDisplaySpan.textContent = "";
 });
