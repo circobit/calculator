@@ -154,44 +154,79 @@ function performOperation() {
 }
 
 
-// Span to show scientific notation to don't overflow the display
-const inlineDisplaySpan = document.getElementById("inlineDisplay");
-
-
-// Event listeners to write numbers in display
-// Get display element
-const displayElement = document.getElementById("display");
-// Add eventListener to number buttons
-numberButtons.forEach((element) => element.addEventListener('click', function() {
+// numberButtons listener function
+function numberListener(element) {
+	// Enter in error state if user attempts to insert a number
+	// into another number with scientific notation
+	if (inlineDisplaySpan.textContent.includes("e+") && equalExecuted == true && operatorInput == "") {
+		// Print state vars at the moment of this error
+		isInErrorState == true;
+		inlineDisplaySpan.textContent = "";
+		displayElement.textContent = "ERROR!";
+		return;
+	}
 	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
-	} else if (displayElement.textContent == "0" || waitingForSecondNumber == true) {
-		waitingForSecondNumber = false;
+	// If operands and latestResult are not stored, it means we are starting from scratch
+	// and we have to start storing the first number
+	} else if (num1Input == null && num2Input == null && waitingForSecondNumber == false) {
+		console.log(`Inserting first number from num1Input`);
+		num1Input = element.textContent;
+		displayElement.textContent = num1Input;
+	// If first operand exists and we're waiting for second number,
+	// store first number of num2Input
+	} else if (num1Input != null && num2Input == null && waitingForSecondNumber == true) {
+		console.log(`Inserting first number from num2Input`);
+		console.log(`operatorInput: ${operatorInput}`);
+		// Raise error in attempts to populate num2Input without operator (After an equal operation)
+		if (operatorInput == "") {
+			isInErrorState == true;
+			inlineDisplaySpan.textContent = "";
+			displayElement.textContent = "ERROR!";
+			return;
+		};
+		num2Input = element.textContent;
+		displayElement.textContent = num2Input;
 		writingSecondNumer = true;
-		displayElement.textContent = element.textContent;
 	} else {
 		// Set limits to don't allow user to exceed the amount of characters in the display
 		if (displayElement.textContent.length < 8) {
-			// Check if the button pressed is Dot (.)
-			// If it is Dot, check wether there's already a dot inserted
-			// and block the possibility to add more than one dot
-			if (element.textContent == "." && isDotInserted == false && element.textContent != "C") {
-				displayElement.textContent = displayElement.textContent + element.textContent;
+			// If dot (.) is inserted and a number in scientific notation is on
+			// the screen, enter in error state.
+			if (element.textContent == "." && inlineDisplaySpan.textContent.includes("e+")) {
+				isInErrorState = true;
+				displayElement.textContent = "ERROR!";
+			// If the button pressed is dot (.), check wether there's already a dot inserted
+			// and block the possibility to add more than one dot. Differentiate between first and second
+			// operand to know where to write the dot.
+			} else if (element.textContent == "." && writingSecondNumer == false && isDotInserted == false) {
+				num1Input = num1Input + element.textContent;
+				displayElement.textContent = num1Input;
 				isDotInserted = true;
-			} else if (element.textContent != "." && element.textContent != "C") {
-				if (inlineDisplaySpan.textContent != "") {
-					// Raise error state if the user tries to insert a number over a scientific notation number
-					displayElement.textContent = "ERROR!";
-					isInErrorState = true;
-				} else {
-					displayElement.textContent = displayElement.textContent + element.textContent;
+			} else if (element.textContent == "." && writingSecondNumer == true && isDotInserted == false) {
+				num2Input = num2Input + element.textContent;
+				displayElement.textContent = num2Input;
+				isDotInserted = true;
+			// If the element is a number
+			} else if (element.textContent != ".") {
+				// Check if the operand to continue writing is the first one or the second one
+				if (num1Input != null && num2Input == null && waitingForSecondNumber == false) {
+					num1Input = num1Input + element.textContent;
+					displayElement.textContent = num1Input;
+				} else if (num1Input != null && num2Input != null && writingSecondNumer == true) {
+					num2Input = num2Input + element.textContent;
+					displayElement.textContent = num2Input;
 				};
 			};
 		};
 	};
 	inlineDisplaySpan.textContent = "";
-}));
+}
+
+
+// Event listeners to number buttons to store and show the operands
+numberButtons.forEach((element) => element.addEventListener('click', () => numberListener(element)));
 
 
 // Add eventListeners to operator buttons to store values in vars
