@@ -189,10 +189,11 @@ numberButtons.forEach((element) => element.addEventListener('click', function() 
 
 // Add eventListeners to operator buttons to store values in vars
 operatorButtons.forEach((element) => element.addEventListener('click', function() {
-	// Check if num1Input is inserted. If not, populate num1Input with first number
-	// and set latestResult to that number to reflect the latest result;
+	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
+	// Check if num1Input is inserted. If not, populate num1Input with first number
+	// and set latestResult to that number to reflect the latest result;
 	} else if (num1Input == null && latestResult == null) {
 		num1Input = +displayElement.textContent;
 		// latestResults can be what it's shown in display because the first number
