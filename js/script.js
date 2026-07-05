@@ -208,7 +208,13 @@ operatorButtons.forEach((element) => element.addEventListener('click', function(
 	} else if (num1Input == null && num2Input == null && latestResult != null) {
 		num1Input = latestResult;
 		waitingForSecondNumber = true;
+	// If the values of num1Input and what's on the display are different,
+	// the value on display must be stored as num2Input, perform the
+	// operation and show the latestResult in the display
+	} else if (num1Input != displayElement.textContent) {
+		performOperation();
 	};
+	// Store operatorInput
 	operatorInput = element.textContent;
 	isDotInserted = false;
 }));
