@@ -145,11 +145,12 @@ function performOperation() {
 		displayElement.textContent = resultString;
 	};
 	latestResult = result;
-	waitingForSecondNumber = true;
+	writingSecondNumer = false;
 	isDotInserted = false;
-	num1Input = result;
+	num1Input = result.toString();
 	num2Input = null;
 	operatorInput = "";
+	equalExecuted = true;
 }
 
 
