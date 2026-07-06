@@ -64,7 +64,7 @@ equalButton.addEventListener('mouseout', function() {
 });
 
 
-//==== Calculator logic ====//
+//==== Basic operations ====//
 
 // Add
 function add(num1, num2) {
@@ -86,25 +86,6 @@ function divide(num1, num2) {
 	return num1 / num2;
 };
 
-
-// State variables
-let num1Input = null;
-let num2Input = null;
-let operatorInput = "";
-let latestResult = null;
-let waitingForSecondNumber = false;
-let writingSecondNumer = false;
-let isDotInserted = false;
-let isInErrorState = false;
-let equalExecuted = false;
-
-
-// Get display element
-const displayElement = document.getElementById("display");
-// Span to show scientific notation to don't overflow the display
-const inlineDisplaySpan = document.getElementById("inlineDisplay");
-
-
 // Operate function
 function operate(operator, num1, num2) {
 	if (operator == "+") {
@@ -118,6 +99,29 @@ function operate(operator, num1, num2) {
 	};
 };
 
+
+//==== State variables ====//
+
+let num1Input = null;
+let num2Input = null;
+let operatorInput = "";
+let latestResult = null;
+let waitingForSecondNumber = false;
+let writingSecondNumer = false;
+let isDotInserted = false;
+let isInErrorState = false;
+let equalExecuted = false;
+
+
+//==== Display elements to modify ====//
+
+// Get display element
+const displayElement = document.getElementById("display");
+// Span to show scientific notation to don't overflow the display
+const inlineDisplaySpan = document.getElementById("inlineDisplay");
+
+
+//==== Functions to be called by event listeners ====//
 
 // Perform operation
 function performOperation() {
@@ -224,6 +228,8 @@ function numberListener(element) {
 	inlineDisplaySpan.textContent = "";
 }
 
+
+//==== Event listeners to store numbers and run operations ====//
 
 // Event listeners to number buttons to store and show the operands
 numberButtons.forEach((element) => element.addEventListener('click', () => numberListener(element)));
