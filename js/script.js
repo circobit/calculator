@@ -278,14 +278,27 @@ clearButton.addEventListener('click', function() {
 	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
-	} else if (displayElement.textContent != 0 && displayElement.textContent.length > 1) {
+	// If the user tries to delete a number from a number in scientific notation,
+	// enter in error state and show it on the display
+	} else if (inlineDisplaySpan.textContent.includes("e+")) {
+		isInErrorState == true;
+		inlineDisplaySpan.textContent = "";
+		displayElement.textContent = "ERROR!";
+	// Check if the operand to delete the digit from is the first one
+	} else if (num1Input != null && num2Input == null && waitingForSecondNumber == false) {
 		// If the last value to remove is a dot, set isDotInserted to false
-		if (displayElement.textContent.slice(-1) == ".") {
+		if (num1Input.slice(-1) == ".") {
 			isDotInserted = false;
-		};
-		displayElement.textContent = displayElement.textContent.slice(0, -1);
-	} else {
-		displayElement.textContent = 0;
+		}
+		num1Input = num1Input.slice(0, -1);
+		displayElement.textContent = num1Input;
+	// Check if the operand to delete the digit from is the second one
+	} else if (num1Input != null && num2Input != null && writingSecondNumer == true) {
+		// If the last value to remove is a dot, set isDotInserted to false
+		if (num2Input.slice(-1) == ".") {
+			isDotInserted = false;
+		}
+		num2Input = num2Input.slice(0, -1);
+		displayElement.textContent = num2Input;
 	}
-	inlineDisplaySpan.textContent = "";
 });
