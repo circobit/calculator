@@ -231,29 +231,21 @@ numberButtons.forEach((element) => element.addEventListener('click', () => numbe
 
 // Add eventListeners to operator buttons to store values in vars
 operatorButtons.forEach((element) => element.addEventListener('click', function() {
+	// Indicate that the operation is not anymore a result of the equal operator
+	equalExecuted = false;
 	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
-	// Check if num1Input is inserted. If not, populate num1Input with first number
-	// and set latestResult to that number to reflect the latest result;
+	// Check if num1Input is and latestResult are absent. 
+	// In such case, do nothing.
 	} else if (num1Input == null && latestResult == null) {
-		num1Input = +displayElement.textContent;
-		// latestResults can be what it's shown in display because the first number
-		// will never be in scientific notation and, hence, won't be split in both
-		// display spans.
-		latestResult = +displayElement.textContent;
-		// Since the first number is inserted, we indicate that we are waiting for
-		// the second number
+		return;
+	// If both operands are present, perform operation and
+	// set num1Input to latestResult
+	} else if (num1Input != null && num2Input == null) {
+		operatorInput = element.textContent;
 		waitingForSecondNumber = true;
-	// If the latestResult is stored and also num1Input and num2Input are null,
-	// it means we are operating over a result. Store latestResult as num1Input
-	} else if (num1Input == null && num2Input == null && latestResult != null) {
-		num1Input = latestResult;
-		waitingForSecondNumber = true;
-	// If the values of num1Input and what's on the display are different,
-	// the value on display must be stored as num2Input, perform the
-	// operation and show the latestResult in the display
-	} else if (num1Input != displayElement.textContent) {
+	} else if (num1Input != null && num2Input != null && operatorInput != "") {
 		performOperation();
 	};
 	// Store operatorInput
