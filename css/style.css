@@ -3,6 +3,24 @@
     src: url("../fonts/digital-7.ttf") format("truetype");
 }
 
+/* @media evaluates if hover exist before applying because otherwise
+it can collide in mobile by leaving the hightlight on */
+@media (hover: hover) {
+	button.operator:hover {
+		background-color: rgb(249, 173, 66);
+	}
+	button.number:hover {
+		background-color: rgb(61, 61, 70);
+	}
+	div #equal:hover {
+		background-color: rgb(127, 172, 231);
+	}
+	div #allClear:hover, 
+	div #clear:hover {
+		background-color: rgb(182, 85, 85);
+	}
+}
+
 body {
 	height: 100svh;
 	display: flex;
@@ -87,9 +105,18 @@ button {
 	background-color: rgb(226, 142, 26);
 	color: black;
 }
+ 
+button.operator:active {
+	background-color: rgb(249, 173, 66);
+}
 
 .number {
 	background-color: rgb(45, 45, 62);
+	color: white;
+}
+
+button.number:active {
+	background-color: rgb(61, 61, 70);
 	color: white;
 }
 
@@ -97,6 +124,10 @@ button {
 	background-color: rgb(89, 154, 239);
 	color: white;
 	height: 100%;
+}
+
+div #equal:active {
+	background-color: rgb(127, 172, 231);
 }
 
 .column1,
@@ -123,6 +154,11 @@ button {
 #clear {
 	background-color: rgb(172, 4, 4);
 	color: white;
+}
+
+div #allClear:active,
+div #clear:active {
+	background-color: rgb(182, 85, 85);
 }
 
 #allClear {
