@@ -72,6 +72,7 @@ function performOperation() {
 		return;
 	};
 	let result = operate(operatorInput, +num1Input, +num2Input);
+	console.log(`${num1Input} ${operatorInput} ${num2Input} = ${result}`);
 	// Devision by zero or not finite result throws an error
 	if (!isFinite(result)) {
 		isInErrorState = true;
@@ -291,21 +292,52 @@ function keyboardListener(element) {
 //==== Event listeners to store numbers and run operations ====//
 
 // Event listeners to number buttons to store and show the operands
-numberButtons.forEach((element) => element.addEventListener('click', () => numberListener(element)));
+numberButtons.forEach((element) => element.addEventListener('click', () => {
+	numberListener(element);
+	// Remove focus from button
+	element.blur();
+}));
 
 // Add eventListeners to operator buttons to store values in vars
-operatorButtons.forEach((element) => element.addEventListener('click', () => operatorListener(element)));
+operatorButtons.forEach((element) => element.addEventListener('click', () => {
+	operatorListener(element)
+	// Remove focus from button
+	element.blur();
+}));
 
 // Add eventListener to equal button to perform operation and show result
-equalButton.addEventListener('click', () => performOperation());
+equalButton.addEventListener('click', () => {
+	performOperation();
+	// Remove focus from button
+	equalButton.blur();
+});
 
 // Add eventListener to allClear button to clean all numbers
-allClearButton.addEventListener('click', () => clearAll());
+allClearButton.addEventListener('click', () => {
+	clearAll();
+	// Remove focus from button
+	allClearButton.blur();
+});
 
 // Add eventListener for clear button to remove the last digit
-clearButton.addEventListener('click', () => clear());
+clearButton.addEventListener('click', () => {
+	clear();
+	// Remove focus from button
+	allClearButton.blur();
+});
 
 
 //==== Event listeners of keyboard ====//
 
-document.addEventListener('keydown', () => keyboardListener(event));
+document.addEventListener('keydown', (event) => {
+	// Prevent default behaviour (click) in Enter button.
+	// The listeners are evaluated before the default
+	// browser behavior. This is the moment to tell
+	// the element to skip the default behaviour that
+	// the browser executes after what's being passed
+	// to the listener.
+	if (event.key == "Enter") {
+		event.preventDefault();
+	}
+	keyboardListener(event);
+});
