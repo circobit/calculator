@@ -70,8 +70,15 @@ const inlineDisplaySpan = document.getElementById("inlineDisplay");
 function performOperation() {
 	if (isInErrorState == true) {
 		return;
-	}
+	};
 	let result = operate(operatorInput, +num1Input, +num2Input);
+	// Devision by zero or not finite result throws an error
+	if (!isFinite(result)) {
+		isInErrorState = true;
+		inlineDisplaySpan.textContent = "";
+		displayElement.textContent = "ERROR!";
+		return;
+	};
 	// Use .toPrecision() to make the result not overflow the display if
 	// it's longer than 7 digits
 	resultString = result.toString();
