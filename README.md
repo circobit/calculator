@@ -1,6 +1,6 @@
 # Calculator
 
-The Calculator project is the final assignment of The Odin Project's Foundations course. The goal is to build a working on-screen calculator using HTML, CSS, and JavaScript that performs the four basic arithmetic operations (addition, subtraction, multiplication, and division).
+The Calculator project is the final assignment of [The Odin Project's Foundations course](https://www.theodinproject.com/lessons/foundations-calculator). The goal is to build a calculator using HTML, CSS and JavaScript that performs the four basic arithmetic operations (addition, subtraction, multiplication and division).
 
 
 ## Assignment
@@ -18,7 +18,7 @@ The Calculator project is the final assignment of The Odin Project's Foundations
 - Round answers with long decimals so they don't overflow the display.
 - Pressing `=` before entering all numbers or an operator could cause problems.
 - Pressing "clear" should wipe out any existing data so the user really starts fresh.
-- Display an error message if the user tries to divide by `0`, and don't let it crash the calculator.
+- Display an error message if the user tries to divide by `0` and don't let it crash the calculator.
 - Only run an operation when supplied with two numbers and an operator. Pressing an operator twice consecutively should not evaluate; it should just take the last operator entered for the next operation.
 - When a result is displayed, pressing a new digit should clear the result and start a new calculation instead of appending to the existing result.
 
