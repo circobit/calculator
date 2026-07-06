@@ -35,9 +35,9 @@ function operate(operator, num1, num2) {
 		return add(num1, num2);
 	} else if (operator == "-") {
 		return subtract(num1, num2);
-	} else if (operator == "x") {
+	} else if (operator == "x" || operator == "*") {
 		return multiply(num1, num2);
-	} else if (operator == "÷") {
+	} else if (operator == "÷" || operator == "/") {
 		return divide(num1, num2);
 	};
 };
@@ -118,14 +118,11 @@ function numberListener(element) {
 	// If operands and latestResult are not stored, it means we are starting from scratch
 	// and we have to start storing the first number
 	} else if (num1Input == null && num2Input == null && waitingForSecondNumber == false) {
-		console.log(`Inserting first number from num1Input`);
 		num1Input = element.textContent;
 		displayElement.textContent = num1Input;
 	// If first operand exists and we're waiting for second number,
 	// store first number of num2Input
 	} else if (num1Input != null && num2Input == null && waitingForSecondNumber == true) {
-		console.log(`Inserting first number from num2Input`);
-		console.log(`operatorInput: ${operatorInput}`);
 		// Raise error in attempts to populate num2Input without operator (After an equal operation)
 		if (operatorInput == "") {
 			isInErrorState == true;
@@ -243,6 +240,40 @@ function clear() {
 };
 
 
+// keyboard listener function
+function keyboardListener(element) {
+	// Vars to check operator and numbers
+	const numbers = "0123456789.,";
+	const operators = "*/+-";
+	// Create object to populate it with the textContent.
+	// It will be passed to the functions for them to identify 
+	// if it's a number or an operator.
+	const eventObj = { textContent: element.key };
+	// Derivate the event to the corresponding function 
+	// based on the key value
+	// Operator keys
+	if (operators.includes(eventObj.textContent)) {
+		operatorListener(eventObj);
+	};
+	// Number keys
+	if (numbers.includes(eventObj.textContent)) {
+		numberListener(eventObj);
+	};
+	// Backspace - clear()
+	if (eventObj.textContent == "Backspace") {
+		clear();
+	};
+	// Escape - clearAll()
+	if (eventObj.textContent == "Escape") {
+		clearAll();
+	};
+	// Equal
+	if (eventObj.textContent == "Enter") {
+		performOperation();
+	};
+};
+
+
 //==== Event listeners to store numbers and run operations ====//
 
 // Event listeners to number buttons to store and show the operands
@@ -259,3 +290,8 @@ allClearButton.addEventListener('click', () => clearAll());
 
 // Add eventListener for clear button to remove the last digit
 clearButton.addEventListener('click', () => clear());
+
+
+//==== Event listeners of keyboard ====//
+
+document.addEventListener('keydown', () => keyboardListener(event));
