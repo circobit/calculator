@@ -107,7 +107,7 @@ function numberListener(element) {
 	// into another number with scientific notation
 	if (inlineDisplaySpan.textContent.includes("e+") && equalExecuted == true && operatorInput == "") {
 		// Print state vars at the moment of this error
-		isInErrorState == true;
+		isInErrorState = true;
 		inlineDisplaySpan.textContent = "";
 		displayElement.textContent = "ERROR!";
 		return;
@@ -125,7 +125,7 @@ function numberListener(element) {
 	} else if (num1Input != null && num2Input == null && waitingForSecondNumber == true) {
 		// Raise error in attempts to populate num2Input without operator (After an equal operation)
 		if (operatorInput == "") {
-			isInErrorState == true;
+			isInErrorState = true;
 			inlineDisplaySpan.textContent = "";
 			displayElement.textContent = "ERROR!";
 			return;
@@ -217,7 +217,7 @@ function clear() {
 	// If the user tries to delete a number from a number in scientific notation,
 	// enter in error state and show it on the display
 	} else if (inlineDisplaySpan.textContent.includes("e+")) {
-		isInErrorState == true;
+		isInErrorState = true;
 		inlineDisplaySpan.textContent = "";
 		displayElement.textContent = "ERROR!";
 	// Check if the operand to delete the digit from is the first one
