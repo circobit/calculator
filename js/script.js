@@ -122,6 +122,13 @@ function numberListener(element) {
 	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
+	// If a result is on screen and the user types a digit, start fresh
+	} else if (equalExecuted == true && operatorInput == "" && element.textContent != ".") {
+		// Wipe state first
+		clearAll();
+		num1Input = element.textContent;
+		displayElement.textContent = num1Input;
+		return;
 	// If operands and latestResult are not stored, it means we are starting from scratch
 	// and we have to start storing the first number
 	} else if (num1Input == null && num2Input == null && waitingForSecondNumber == false) {
