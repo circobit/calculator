@@ -229,14 +229,8 @@ function numberListener(element) {
 }
 
 
-//==== Event listeners to store numbers and run operations ====//
-
-// Event listeners to number buttons to store and show the operands
-numberButtons.forEach((element) => element.addEventListener('click', () => numberListener(element)));
-
-
-// Add eventListeners to operator buttons to store values in vars
-operatorButtons.forEach((element) => element.addEventListener('click', function() {
+// operatorButtons listener function
+function operatorListener(element) {
 	// Indicate that the operation is not anymore a result of the equal operator
 	equalExecuted = false;
 	// Do nothing if it's in errorState (Just AC can work in that scenario)
@@ -257,7 +251,17 @@ operatorButtons.forEach((element) => element.addEventListener('click', function(
 	// Store operatorInput
 	operatorInput = element.textContent;
 	isDotInserted = false;
-}));
+};
+
+
+//==== Event listeners to store numbers and run operations ====//
+
+// Event listeners to number buttons to store and show the operands
+numberButtons.forEach((element) => element.addEventListener('click', () => numberListener(element)));
+
+
+// Add eventListeners to operator buttons to store values in vars
+operatorButtons.forEach((element) => element.addEventListener('click', () => operatorListener(element)));
 
 
 // Add eventListener to equal button to perform operation and show result
