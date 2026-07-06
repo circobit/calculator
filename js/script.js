@@ -254,6 +254,21 @@ function operatorListener(element) {
 };
 
 
+// clearAll function
+function clearAll() {
+	num1Input = null;
+	num2Input = null;
+	operatorInput = "";
+	latestResult = null;
+	waitingForSecondNumber = false;
+	isDotInserted = false;
+	isInErrorState = false;
+	equalExecuted = false;
+	displayElement.textContent = 0;
+	inlineDisplaySpan.textContent = "";
+};
+
+
 //==== Event listeners to store numbers and run operations ====//
 
 // Event listeners to number buttons to store and show the operands
@@ -269,18 +284,7 @@ equalButton.addEventListener('click', () => performOperation());
 
 
 // Add eventListener to allClear button to clean all numbers
-allClearButton.addEventListener('click', function() {
-	num1Input = null;
-	num2Input = null;
-	operatorInput = "";
-	latestResult = null;
-	waitingForSecondNumber = false;
-	isDotInserted = false;
-	isInErrorState = false;
-	equalExecuted = false;
-	displayElement.textContent = 0;
-	inlineDisplaySpan.textContent = "";
-});
+allClearButton.addEventListener('click', () => clearAll());
 
 
 // Add eventListener for clear button to remove the last digit
