@@ -269,26 +269,8 @@ function clearAll() {
 };
 
 
-//==== Event listeners to store numbers and run operations ====//
-
-// Event listeners to number buttons to store and show the operands
-numberButtons.forEach((element) => element.addEventListener('click', () => numberListener(element)));
-
-
-// Add eventListeners to operator buttons to store values in vars
-operatorButtons.forEach((element) => element.addEventListener('click', () => operatorListener(element)));
-
-
-// Add eventListener to equal button to perform operation and show result
-equalButton.addEventListener('click', () => performOperation());
-
-
-// Add eventListener to allClear button to clean all numbers
-allClearButton.addEventListener('click', () => clearAll());
-
-
-// Add eventListener for clear button to remove the last digit
-clearButton.addEventListener('click', function() {
+// clear function
+function clear() {
 	// Do nothing if it's in errorState (Just AC can work in that scenario)
 	if (isInErrorState == true) {
 		return;
@@ -315,4 +297,22 @@ clearButton.addEventListener('click', function() {
 		num2Input = num2Input.slice(0, -1);
 		displayElement.textContent = num2Input;
 	}
-});
+};
+
+
+//==== Event listeners to store numbers and run operations ====//
+
+// Event listeners to number buttons to store and show the operands
+numberButtons.forEach((element) => element.addEventListener('click', () => numberListener(element)));
+
+// Add eventListeners to operator buttons to store values in vars
+operatorButtons.forEach((element) => element.addEventListener('click', () => operatorListener(element)));
+
+// Add eventListener to equal button to perform operation and show result
+equalButton.addEventListener('click', () => performOperation());
+
+// Add eventListener to allClear button to clean all numbers
+allClearButton.addEventListener('click', () => clearAll());
+
+// Add eventListener for clear button to remove the last digit
+clearButton.addEventListener('click', () => clear());
