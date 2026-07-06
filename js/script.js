@@ -1,67 +1,115 @@
-//==== Event listeners to highlight buttons on mouseover ====//
+//==== Event listeners to highlight buttons on mouseover or touch ====//
 
-// Operator buttons
-const operatorButtons = document.querySelectorAll(".operator");
-// Mouseover
-operatorButtons.forEach((element) => element.addEventListener('mouseover', function() {
+// Functions for event listeners
+function highlightOperator (element) {
 	if (element.textContent != "=") {
 		element.style.backgroundColor = "rgb(249, 173, 66)";
 	}
-}));
-// Mouseout
-operatorButtons.forEach((element) => element.addEventListener('mouseout', function() {
+};
+
+function revertHighlightOperator (element) {
 	if (element.textContent != "=") {
-		element.style.backgroundColor = "rgb(226, 142, 26)";
+		element.style.backgroundColor = "rgb(249, 173, 66)";
 	}
-}));
+};
+
+function highlightNumber (element) {
+	if (element.textContent != "=") {
+		element.style.backgroundColor = "rgb(61, 61, 70)";
+	}
+};
+
+function revertHighlightNumber (element) {
+	if (element.textContent != "=") {
+		element.style.backgroundColor = "rgb(45, 45, 62)";
+	}
+};
+
+function highlightClear () {
+	allClearButton.style.backgroundColor = "rgb(182, 85, 85)";
+};
+
+function revertHighlightClear () {
+	allClearButton.style.backgroundColor = "rgb(172, 4, 4)";
+};
+
+function highlightEqual () {
+	allClearButton.style.backgroundColor = "rgb(127, 172, 231)";
+};
+
+function revertHighlightEqual () {
+	allClearButton.style.backgroundColor = "rgb(89, 154, 239)";
+};
 
 
-// Number buttons
+// Event listeners of Operator buttons
+const operatorButtons = document.querySelectorAll(".operator");
+// Mouseover
+operatorButtons.forEach((element) => element.addEventListener('mouseover', () => highlightOperator(element)));
+// Mouseout
+operatorButtons.forEach((element) => element.addEventListener('mouseout', () => revertHighlightOperator(element)));
+// Touchstart
+operatorButtons.forEach((element) => element.addEventListener('touchstart', () => highlightOperator(element)));
+// Touchend
+operatorButtons.forEach((element) => element.addEventListener('touchend', () => revertHighlightOperator(element)));
+// Touchcancel
+operatorButtons.forEach((element) => element.addEventListener('touchcancel', () => revertHighlightOperator(element)));
+
+
+// Event listeners of Number buttons
 const numberButtons = document.querySelectorAll(".number");
 // Mouseover
-numberButtons.forEach((element) => element.addEventListener('mouseover', function() {
-	element.style.backgroundColor = "rgb(61, 61, 70)";
-}));
+numberButtons.forEach((element) => element.addEventListener('mouseover', () => highlightNumber(element)));
 // Mouseout
-numberButtons.forEach((element) => element.addEventListener('mouseout', function() {
-	element.style.backgroundColor = "rgb(45, 45, 62)";
-}));
+numberButtons.forEach((element) => element.addEventListener('mouseout', () => revertHighlightNumber(element)));
+// Touchstart
+numberButtons.forEach((element) => element.addEventListener('touchstart', () => highlightNumber(element)));
+// Touchend
+numberButtons.forEach((element) => element.addEventListener('touchend', () => revertHighlightNumber(element)));
+// Touchcancel
+numberButtons.forEach((element) => element.addEventListener('touchcancel', () => revertHighlightNumber(element)));
 
 
 // 'All Clear' button
 const allClearButton = document.getElementById("allClear");
 // Mouseover
-allClearButton.addEventListener('mouseover', function() {
-	allClearButton.style.backgroundColor = "rgb(182, 85, 85)";
-});
+allClearButton.addEventListener('mouseover', () => highlightClear());
 // Mouseout
-allClearButton.addEventListener('mouseout', function() {
-	allClearButton.style.backgroundColor = "rgb(172, 4, 4)";
-});
+allClearButton.addEventListener('mouseout', () => revertHighlightClear());
+// Touchstart
+allClearButton.addEventListener('touchstart', () => highlightClear());
+// Touchend
+allClearButton.addEventListener('touchend', () => revertHighlightClear());
+// Touchcancel
+allClearButton.addEventListener('touchcancel', () => revertHighlightClear());
 
 
 // Clear button
 const clearButton = document.getElementById("clear");
 // Mouseover
-clearButton.addEventListener('mouseover', function() {
-	clearButton.style.backgroundColor = "rgb(182, 85, 85)";
-});
+clearButton.addEventListener('mouseover', () => highlightClear());
 // Mouseout
-clearButton.addEventListener('mouseout', function() {
-	clearButton.style.backgroundColor = "rgb(172, 4, 4)";
-});
+clearButton.addEventListener('mouseout', () => revertHighlightClear());
+// Touchstart
+clearButton.addEventListener('touchstart', () => highlightClear());
+// Touchend
+clearButton.addEventListener('touchend', () => revertHighlightClear());
+// Touchcancel
+clearButton.addEventListener('touchcancel', () => revertHighlightClear());
 
 
 // Equal button
 const equalButton = document.getElementById("equal");
 // Mouseover
-equalButton.addEventListener('mouseover', function() {
-	equalButton.style.backgroundColor = "rgb(127, 172, 231)";
-});
+equalButton.addEventListener('mouseover', () => highlightEqual());
 // Mouseout
-equalButton.addEventListener('mouseout', function() {
-	equalButton.style.backgroundColor = "rgb(89, 154, 239)";
-});
+equalButton.addEventListener('mouseout', () => revertHighlightEqual());
+// Touchstart
+equalButton.addEventListener('touchstart', () => highlightEqual());
+// Touchend
+equalButton.addEventListener('touchend', () => revertHighlightEqual());
+// Touchcancel
+equalButton.addEventListener('touchcancel', () => revertHighlightEqual());
 
 
 //==== Basic operations ====//
